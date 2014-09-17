@@ -39,5 +39,3 @@ class PageAuthGroup(models.Model):
 
         return list((cls.objects.exclude(page__in=pages).values_list(
             'page__pk', flat=True)))
-
-    editing.allow_tags = True
