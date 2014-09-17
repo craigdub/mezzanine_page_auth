@@ -8,6 +8,7 @@ from mezzanine.pages.models import Page, RichTextPage, Link
 from mezzanine.pages.admin import PageAdmin, LinkAdmin
 from mezzanine.core.admin import TabularDynamicInlineAdmin
 from .models import PageAuthGroup
+from mezzanine.core.admin import DisplayableAdmin, OwnableAdmin
 
 
 class PageAuthGroupAdminMixin(object):
@@ -48,6 +49,15 @@ class LinkAuthGroupAdmin(PageAuthGroupAdminMixin, LinkAdmin):
     ``groups``  to the admin interface.
     """
     inlines = deepcopy(LinkAdmin.inlines) + [PageAuthGroupInline]
+
+
+class PageAuthGroupManager(DisplayableAdmin, OwnableAdmin):
+    def save_form(self, request, form, change):
+        """
+        Super class ordering is important here - user must get saved first.
+        """
+        OwnableAdmin.save_form(self, request, form, change)
+        return DisplayableAdmin.save_form(self, request, form, change)
 
 
 admin.site.unregister(Page)

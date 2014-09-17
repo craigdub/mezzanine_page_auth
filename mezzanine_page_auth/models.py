@@ -4,7 +4,6 @@ from django.contrib.auth.models import Group
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
-
 from mezzanine.pages.models import Page
 
 
@@ -36,6 +35,9 @@ class PageAuthGroup(models.Model):
             return list(set(cls.objects.values_list('page__pk', flat=True)))
         pages = cls.objects.filter(group__in=groups).values_list('page__pk',
                                                                  flat=True)
+        return pages
+
         return list((cls.objects.exclude(page__in=pages).values_list(
             'page__pk', flat=True)))
 
+    editing.allow_tags = True
