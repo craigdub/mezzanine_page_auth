@@ -4,7 +4,7 @@ from re import search
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponseForbidden
 from mezzanine.pages.models import Page
-from .models import PageAuthGroup, PageAuthUser
+from .models import PageAuthGroup
 
 
 class PageAuthMiddleware(object):
